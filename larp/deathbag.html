@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Deathbag simulator</title>
+<html lang="en">
+<head>
 
-        <script>
+    <script>
             function shuffle(array) {
                 var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -87,32 +86,65 @@
             }
         </script>
 
-    </head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Death bag calculator</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <body>
-        <h2>Death bag calculator</h2>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        Number of people dead:
-        <input type="number" id="numberdead"><br>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
-        Number of deaths per person:
-        <input type="number" id="numberdeaths"><br>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
 
-        Level:
-        <input type="number" id="level"><br>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
 
-        Elf/Thin Soul:
-        <input type="checkbox" id="thinsoul"><br>
+</head>
+<body>
 
-        Increased divine intervention chance:
-        <input type="checkbox" id="vip"><br>
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container">
+          <div class="one-half column" style="margin-top: 10%">
+            <h2>Death bag calculator</h2>
 
-        <input type="button" id="submit" value="Pull for deaths" onclick="pullDeaths()"/>
+            Number of people dead:
+            <input type="number" id="numberdead"><br>
 
-        <br />
-        <i><b><span id="forgot"> --- </span></b></i> people forgot how they died. <br />
-        <i><b><span id="loselevel"> --- </span></b></i> people lost a level. <br />
-        <i><b><span id="pd"> --- </span></b></i> people PD'd. <br />
-        <i><b><span id="di"> --- </span></b></i> people PD'd, but got divine intervention.
-    </body>
+            Number of deaths per person:
+            <input type="number" id="numberdeaths"><br>
+
+            Level:
+            <input type="number" id="level"><br>
+
+            Elf/Thin Soul:
+            <input type="checkbox" id="thinsoul"><br>
+
+            Increased divine intervention chance:
+            <input type="checkbox" id="vip"><br>
+
+            <input type="button" id="submit" value="Pull for deaths" onclick="pullDeaths()"/>
+
+            <br />
+            <i><b><span id="forgot"> --- </span></b></i> people forgot how they died. <br />
+            <i><b><span id="loselevel"> --- </span></b></i> people lost a level. <br />
+            <i><b><span id="pd"> --- </span></b></i> people PD'd. <br />
+            <i><b><span id="di"> --- </span></b></i> people PD'd, but got divine intervention.
+        </div>
+    </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
 </html>
