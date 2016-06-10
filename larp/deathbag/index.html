@@ -79,6 +79,7 @@
                     }
                 }
 
+                document.getElementById("clean").innerHTML = clean;
                 document.getElementById("forgot").innerHTML = forget;
                 document.getElementById("loselevel").innerHTML = loselevel;
                 document.getElementById("pd").innerHTML = pd;
@@ -136,7 +137,7 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
-          <div class="one-half column" style="margin-top: 7%">
+          <div class="one-half column" style="margin-top: 5%">
             <h4>Death bag calculator</h4>
 
             Number of people dead:
@@ -157,6 +158,7 @@
             <input type="button" id="submit" value="Pull for deaths" onclick="pullDeaths()"/>
 
             <br />
+            <i><b><span id="clean"> --- </span></b></i> people had no negative effects. <br />
             <i><b><span id="forgot"> --- </span></b></i> people forgot how they died. <br />
             <i><b><span id="loselevel"> --- </span></b></i> people lost a level. <br />
             <i><b><span id="pd"> --- </span></b></i> people PD'd. <br />
@@ -165,7 +167,7 @@
     </div>
 
 <footer>
-    <br />
+    <hr />
     <div class="container">
         <p>
         Made in conjunction with the <a href="http://getskeleton.com/">Skeleton libraries</a><br />
