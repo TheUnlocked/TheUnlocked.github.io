@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Deathbag simulator</title>
+
+        <script>
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+
+            function pullDeaths() {
+                var dead = parseInt(document.getElementById("numberdead").value);
+                var deaths = parseInt(document.getElementById("numberdeaths").value);
+                var level = parseInt(document.getElementById("level").value);
+                var thinsoul = document.getElementById("thinsoul").checked;
+                console.log(thinsoul);
+                var vip = document.getElementById("vip").checked;
+
+                var clean = 0;
+                var forget = 0;
+                var loselevel = 0;
+                var pd = 0;
+                var di = 0;
+
+                for (var death = 0; death < dead; death++) {
+                    var deathBag = []
+                    for (var i = 0; i < 29; i++) {
+                        deathBag.push(0);
+                    }
+                    for (var i = 0; i < 3; i++) {
+                        deathBag.push(1);
+                    }
+                    for (var i = 0; i < 1; i++) {
+                        deathBag.push(2);
+                    }
+
+                    shuffle(deathBag);
+
+                    var pulled = deathBag.slice(0, 9 + deaths);
+                    console.log(deaths);
+                    console.log(pulled);
+                    var stones = pulled.filter(function (x) { return x == 1 }).length;
+                    stones += thinsoul ? 1 : 0;
+                    if (stones == 0) {
+                        clean++;
+                    }
+                    if (stones == 1) {
+                        forget++;
+                    }
+                    if (stones == 2) {
+                        loselevel++;
+                    }
+                    if (stones >= 3) {
+                        if (pulled.indexOf(2) == -1) {
+                            if (deathBag.slice(0, vip ? 9 + deaths + (2 * level) : 9 + deaths + level).indexOf(2) == -1) {
+                                pd++;
+                            }
+                            else {
+                                di++;
+                            }
+                        }
+                        else {
+                            di++;
+                        }
+                    }
+                }
+
+                document.getElementById("forgot").innerHTML = forget;
+                document.getElementById("loselevel").innerHTML = loselevel;
+                document.getElementById("pd").innerHTML = pd;
+                document.getElementById("di").innerHTML = di;
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <h2>Death bag calculator</h2>
+
+        Number of people dead:
+        <input type="number" id="numberdead"><br>
+
+        Number of deaths per person:
+        <input type="number" id="numberdeaths"><br>
+
+        Level:
+        <input type="number" id="level"><br>
+
+        Elf/Thin Soul:
+        <input type="checkbox" id="thinsoul"><br>
+
+        Increased divine intervention chance:
+        <input type="checkbox" id="vip"><br>
+
+        <input type="button" id="submit" value="Pull for deaths" onclick="pullDeaths()"/>
+
+        <br />
+        <i><b><span id="forgot"> --- </span></b></i> people forgot how they died. <br />
+        <i><b><span id="loselevel"> --- </span></b></i> people lost a level. <br />
+        <i><b><span id="pd"> --- </span></b></i> people PD'd. <br />
+        <i><b><span id="di"> --- </span></b></i> people PD'd, but got divine intervention.
+    </body>
+</html>
