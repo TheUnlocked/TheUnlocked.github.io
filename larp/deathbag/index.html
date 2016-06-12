@@ -36,7 +36,7 @@
             var thinsoul = document.getElementById("thinsoul").value;
             var dichance = document.getElementById("dichance").value;
 
-            if (thinsoul == "thin") {
+            if (thinsoul == "thin" || thinsoul == "superthin") {
                 document.getElementById("cleanwrapper").className = "grayout";
             }
             else {
@@ -50,7 +50,7 @@
                 document.getElementById("forgotwrapper").className = "";
             }
 
-            if (thinsoul == "superthin") {
+            if (false) {
                 document.getElementById("loselevelwrapper").className = "grayout";
             }
             else {
@@ -128,12 +128,6 @@
                         di++;
                     }
                 }
-            }
-
-            if (thinsoul == "superthin") {
-                clean += forget + loselevel;
-                forget = 0;
-                loselevel = 0;
             }
 
             if (dichance == "nochance") {
