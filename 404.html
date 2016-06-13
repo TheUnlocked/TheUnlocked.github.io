@@ -3,17 +3,24 @@
 <head>
     <title>Bad Link</title>
     
-    <script>
-        function onLoad(){
-            if (window.location.href[window.location.href.length - 1] == "/"){
-                window.location.replace(window.location.href.slice(0, -1));
-            }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js">
+        if (window.location.href[window.location.href.length - 1] == "/"){
+            $.ajax({
+                type: 'HEAD',
+                url: window.location.href.slice(0, -1),
+                success: function () {
+                    window.location.replace(window.location.href.slice(0, -1));
+                },
+                error: function () {
+                    // page does not exist
+                }
+            });
         }
     </script>
 
 
 </head>
-<body onload="onLoad()">
+<body>
     
     This is a bad link.
     <button onclick="goBack()">Go Back</button>
