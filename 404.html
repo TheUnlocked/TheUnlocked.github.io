@@ -5,7 +5,7 @@
     
     <script>
         function onLoad(){
-            if (window.location.href[window.location.href.length] == "/"){
+            if (window.location.href[window.location.href.length - 1] == "/"){
                 window.location.replace(window.location.href.slice(0, -1));
             }
         }
