@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        .grayout {
+            opacity: 0.5; /* Real browsers */
+            filter: alpha(opacity = 50); /* MSIE */
+        }
+    </style>
+
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
+        function changeOptions() {
+            if (document.getElementById("distribution").value == "oneeach" && parseInt(document.getElementById("numplayers").value) < parseInt(document.getElementById("numrewards").value)) {
+                document.getElementById("warning").innerHTML = "<b>WARNING: Not all items will be distributed<b> <br>"
+            }
+            else {
+                document.getElementById("warning").innerHTML = ""
+            }
+        }
+
+        function distributeRewards() {
+            var numplayers = parseInt(document.getElementById("numplayers").value);
+            var numrewards = parseInt(document.getElementById("numrewards").value);
+            var distribution = document.getElementById("distribution").value;
+
+            var TABLESTART = "<table><tr><th>Reward Number</th><th>Player Number</th></tr>";
+            var tablecontent = "";
+            var TABLEEND = "</table>";
+
+            if (distribution == "fair") {
+                var rewardsGiven = 0;
+                while (numrewards > 0) {
+                    var playerpool = [];
+                    for (var i = 0; i < numplayers; i++) {
+                        playerpool.push(i + 1);
+                    }
+                    shuffle(playerpool);
+
+                    for (var i = 0; i < numrewards; i++) {
+                        if (playerpool[i] == null) {
+                            break;
+                        }
+                        tablecontent = tablecontent + "<tr><td>" + (rewardsGiven + 1) + "</td><td>" + playerpool[i] + "</td></tr>";
+                        rewardsGiven++;
+                    }
+
+                    numrewards -= numplayers;
+                }
+            }
+
+            if (distribution == "random") {
+                for (var i = 0; i < numrewards; i++) {
+                    tablecontent = tablecontent + "<tr><td>" + (i + 1) + "</td><td>" + getRandomInt(1, numplayers) + "</td></tr>";
+                    console.log(tablecontent);
+                }
+            }
+
+            if (distribution == "oneeach") {
+                var playerpool = [];
+                for (var i = 0; i < numplayers; i++) {
+                    playerpool.push(i + 1);
+                }
+                shuffle(playerpool);
+
+                for (var i = 0; i < numrewards; i++) {
+                    tablecontent = tablecontent + "<tr><td>" + (i + 1) + "</td><td>" + (playerpool[i] != null ? playerpool[i] : "<span class=\"grayout\"><i>None</i></span>") + "</td></tr>";
+                    console.log(tablecontent);
+                }
+            }
+
+            document.getElementById("rewardtable").innerHTML = TABLESTART + tablecontent + TABLEEND;
+        }
+    </script>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Reward Distributor</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container">
+          <div class="one-half column" style="margin-top: 5%">
+            <h3>Reward Distributor</h3>
+
+            Number of players:
+            <input type="number" id="numplayers" style="width: 80px" onchange="changeOptions()"><br>
+
+            Number of rewards:
+            <input type="number" id="numrewards" style="width: 80px" onchange="changeOptions()"><br>
+
+            Distribution Type:
+            <select id="distribution" onchange="changeOptions()">
+                <option value="fair">Fair</option>
+                <option value="oneeach">One each</option>
+                <option value="random">Random</option>
+            </select>
+            <br />
+
+            <span id="warning"></span>
+
+            <input type="button" id="submit" value="Distribute Rewards" onclick="distributeRewards()" />
+
+
+            <br />
+              <div id="rewardtable">
+                  <table>
+                      <tr>
+                          <th>Reward Number</th>
+                          <th>Player Number</th>
+                      </tr>
+                      <tr>
+                          <td><span class="grayout"><i>None</i></span></td>
+                          <td><span class="grayout"><i>None</i></span></td>
+                      </tr>
+                  </table>
+              </div>
+        </div>
+    </div>
+
+<footer>
+    <hr />
+    <div class="container">
+        <p>
+        Written by Trevor Paley<br />
+        Based on the app by Graham ???<br />
+        Made with <a href="http://getskeleton.com/">Skeleton</a><br />
+        <br />
+        <a href="..">More LARP Webapps</a>
+        </p>
+    </div>
+</footer>
+</body>
+</html>
