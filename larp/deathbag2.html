@@ -18,6 +18,10 @@
             });
         });
 
+        DI_WEAK_MIN = 1
+        DI_MED_MIN = 3
+        DI_STRONG_MIN = 6
+
         function shuffle(array) {
             var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -42,30 +46,44 @@
             var deaths = parseInt(document.getElementById("numberdeaths").value);
             var thinsoul = document.getElementById("thinsoul").value;
             var dichance = document.getElementById("dichance").value;
-			
-			var stones_to_pull = 9 + deaths;
 
-            if (thinsoul == "thin") {
-                stones_to_pull += 5;
+            if (thinsoul == "thin" || thinsoul == "superthin") {
+                document.getElementById("cleanwrapper").className = "grayout";
+            }
+            else {
+                document.getElementById("cleanwrapper").className = "";
             }
 
             if (thinsoul == "superthin") {
-                stones_to_pull += 10;
-            }
-			
-			if (thinsoul == "thick") {
-                stones_to_pull -= 5;
-            }
-
-            if (!(dichance == "nochance") && (stones_to_pull > 23)) {
-                document.getElementById("pdwrapper").className = "grayout";
-            }
-
-            if (dichance == "nochance") {
-                document.getElementById("divine").className = "grayout";
+                document.getElementById("forgotwrapper").className = "grayout";
             }
             else {
-                document.getElementById("divine").className = "";
+                document.getElementById("forgotwrapper").className = "";
+            }
+
+            if (false) {
+                document.getElementById("loselevelwrapper").className = "grayout";
+            }
+            else {
+                document.getElementById("loselevelwrapper").className = "";
+            }
+
+            if (thinsoul == "thick" || (!(dichance == "nochance") && (deaths + 9 >= 23))) {
+                document.getElementById("pdwrapper").className = "grayout";
+            }
+            else {
+                document.getElementById("pdwrapper").className = "";
+            }
+
+            if (thinsoul == "thick" || dichance == "nochance") {
+                document.getElementById("di0wrapper").className = "grayout";
+                document.getElementById("di1wrapper").className = "grayout";
+                document.getElementById("di2wrapper").className = "grayout";
+            }
+            else {
+                document.getElementById("di0wrapper").className = "";
+                document.getElementById("di1wrapper").className = "";
+                document.getElementById("di2wrapper").className = "";
             }
         }
 
@@ -79,20 +97,9 @@
             var forget = 0;
             var loselevel = 0;
             var pd = 0;
-            var divine = {'1':0, '2':0, '3':0, '4':0, '5':0, '6':0, '7':0, '8':0, '9':0, '10':0};
-			var stones_to_pull = 9 + deaths;
-
-            if (thinsoul == "thin") {
-                stones_to_pull += 5;
-            }
-
-            if (thinsoul == "superthin") {
-                stones_to_pull += 10;
-            }
-			
-			if (thinsoul == "thick") {
-                stones_to_pull -= 5;
-            }
+            var di_weak = 0;
+            var di_med = 0;
+            var di_strong = 0;
 
             for (var death = 0; death < dead; death++) {
                 var deathBag = []
@@ -108,10 +115,12 @@
 
                 shuffle(deathBag);
 
-                var pulled = deathBag.slice(0, stones_to_pull);
+                var pulled = deathBag.slice(0, 9 + deaths);
                 var stones = pulled.filter(function (x) { return x == 1 }).length;
                 var red_stones = pulled.filter(function (x) { return x == 2 }).length;
-
+                stones += thinsoul == "thin" ? 1 : 0;
+                stones += thinsoul == "superthin" ? 2 : 0;
+                stones += thinsoul == "thick" ? -1 : 0;
                 if (stones <= 0) {
                     clean++;
                 }
@@ -122,26 +131,27 @@
                     loselevel++;
                 }
                 if (stones >= 3) {
-                    if (dichance == "nochance" || red_stones <= 0)
+                    if (dichance == "nochance")
                         pd++;
+                    else if (red_stones >= DI_STRONG_MIN)
+                        di_strong++;
+                    else if (red_stones >= DI_MED_MIN)
+                        di_med++;
+                    else if (red_stones >= DI_WEAK_MIN)
+                        di_weak++;
                     else
-                        divine[red_stones]++;
+                        pd++;
                 }
             }
 
-			var TABLESTART = "<table><tr><th>Red Stones</th><th>Number of People</th></tr>";
-            var tablecontent = "";
-            var TABLEEND = "</table>";
 
-			for (var i = 0; i < 10; i++) {
-				tablecontent = tablecontent + "<tr><td>" + (i + 1) + "</td><td>" + divine[i + 1] + "</td></tr>";
-			}
-			
             document.getElementById("clean").innerHTML = clean;
             document.getElementById("forgot").innerHTML = forget;
             document.getElementById("loselevel").innerHTML = loselevel;
             document.getElementById("pd").innerHTML = pd;
-            document.getElementById("divine").innerHTML = TABLESTART + tablecontent + TABLEEND;
+            document.getElementById("di0").innerHTML = di_weak;
+            document.getElementById("di1").innerHTML = di_med;
+            document.getElementById("di2").innerHTML = di_strong;
         }
 
     </script>
@@ -176,7 +186,8 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
           <div class="one-half column" style="margin-top: 5%">
-            <h3>Death Bag Calculator V3</h3>
+            <h3 style="margin-bottom:0">Death Bag Calculator</h3>
+			<div style="font-size: 20px; color: #797979"><i>Deprecated</i></div>
 
             Number of people dead:
             <input type="number" id="numberdead" style="width: 80px" onchange="changeOptions()" class="inputbox"><br>
@@ -187,9 +198,9 @@
             Thin Soul:
             <select id="thinsoul" onchange="changeOptions()">
                 <option value="normal">Normal</option>
-                <option value="thin">Thin (+5)</option>
-                <option value="superthin">Frail (+10)</option>
-                <option value="thick">Strong (-5)</option>
+                <option value="thin">Thin</option>
+                <option value="superthin">Frail</option>
+                <option value="thick">Strong</option>
             </select>
             <br>
 
@@ -211,61 +222,19 @@
             <br />
             <span id="pdwrapper"><i><b><span id="pd"> 0 </span></b></i> people PD'd wihout divine intervention.</span>
             <br />
-			<div id="divine">
-				<table>
-					<tr>
-					    <th>Red Stones</th>
-					    <th>Number of People</th>
-					</tr>
-					<tr>
-					    <td><span><i>1</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>2</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>3</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>4</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>5</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>6</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>7</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>8</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>9</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-					<tr>
-					    <td><span><i>10</i></span></td>
-					    <td><span><i>0</i></span></td>
-					</tr>
-				</table>
-            </div>
+            <span id="di0wrapper"><i><b><span id="di0"> 0 </span></b></i> got <b>weak</b> divine intervention (1-2 red stones).</span>
+            <br />
+            <span id="di1wrapper"><i><b><span id="di1"> 0 </span></b></i> got <b>moderate</b> divine intervention (3-5 red stones).</span>
+            <br />
+            <span id="di2wrapper"><i><b><span id="di2"> 0 </span></b></i> got <b>strong</b> divine intervention (6+ red stones).</span>
 </div>
     </div>
 
 <footer>
     <hr />
     <div class="container">
-        Want the old death bag? <a href="deathbag2.html"> Click here. </a> <br />
+	    Looking for the new death bag calculator? <a href="deathbag.html"> Click here. </a> <br />
+        Want the old death bag? <a href="deathbagold.html"> Click here. </a> <br />
         Head back to the main page by clicking <a href="index.html">here.</a>
     </div>
 </footer>
