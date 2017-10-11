@@ -7,6 +7,9 @@
             opacity: 0.5; /* Real browsers */
             filter: alpha(opacity = 50); /* MSIE */
         }
+		.hidden {
+			visibility: hidden;
+		}
     </style>
 
     <script src="jquery-3.1.1.min.js"></script>
@@ -62,9 +65,11 @@
             }
 
             if (dichance == "nochance") {
-                document.getElementById("divine").className = "grayout";
+				document.getElementById("diwrapper").className = "grayout";
+                document.getElementById("divine").className = "hidden";
             }
             else {
+				document.getElementById("diwrapper").className = "";
                 document.getElementById("divine").className = "";
             }
         }
@@ -79,6 +84,7 @@
             var forget = 0;
             var loselevel = 0;
             var pd = 0;
+			var di = 0;
             var divine = {'1':0, '2':0, '3':0, '4':0, '5':0, '6':0, '7':0, '8':0, '9':0, '10':0};
 			var stones_to_pull = 9 + deaths;
 
@@ -122,10 +128,13 @@
                     loselevel++;
                 }
                 if (stones >= 3) {
-                    if (dichance == "nochance" || red_stones <= 0)
+                    if (dichance == "nochance" || red_stones <= 0){
                         pd++;
-                    else
+					}
+                    else{
                         divine[red_stones]++;
+						di++;
+					}
                 }
             }
 
@@ -141,6 +150,7 @@
             document.getElementById("forgot").innerHTML = forget;
             document.getElementById("loselevel").innerHTML = loselevel;
             document.getElementById("pd").innerHTML = pd;
+			document.getElementById("di").innerHTML = di;
             document.getElementById("divine").innerHTML = TABLESTART + tablecontent + TABLEEND;
         }
 
@@ -210,6 +220,8 @@
             <span id="loselevelwrapper"><i><b><span id="loselevel"> 0 </span></b></i> people lost a level.</span>
             <br />
             <span id="pdwrapper"><i><b><span id="pd"> 0 </span></b></i> people PD'd wihout divine intervention.</span>
+            <br />
+			<span id="diwrapper"><i><b><span id="di"> 0 </span></b></i> people PD'd and got divine intervention.</span>
             <br />
 			<div id="divine">
 				<table>
