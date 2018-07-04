@@ -1,0 +1,79 @@
+body {
+    color: rgb(218, 218, 218);
+    background-color: #1f1f1f;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 40px;
+}
+
+input, textarea {
+    color: rgb(218, 218, 218) !important;
+    background-color: #1f1f1f !important;
+}
+
+.bingo, .bingo * {
+    border-spacing: 0;
+    border-style: solid;
+    border-color: rgb(218, 218, 218);
+}
+
+.bingo tr, .bingo th  {
+    border-width: 2px 2px 0 0;
+}
+
+table.bingo {
+    width: 80vmin;
+    height: 80vmin;
+    border-width: 0 0 2px 2px;
+}
+
+.bingo th {
+    width: calc(100% / 5);
+    height: calc(100% / 5);
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 5px;
+}
+
+.bingo th.unselected {
+    background: linear-gradient(#222222, #181818);
+}
+.bingo th.unselected:hover {
+    background: linear-gradient(#3b3b3b, #292929);
+}
+
+.bingo th.selected {
+    background: linear-gradient(#8b0000, #610101);
+}
+.bingo th.selected:hover {
+    background: linear-gradient(#a70000, #750000);
+}
+
+.bingo th.completedX        { background: linear-gradient(#149c02, #0f8300); }
+.bingo th.completedX:hover  { background: linear-gradient(#15b300, #129b00); }
+.bingo th.completedY        { background: linear-gradient(#149c02, #0f8300); }
+.bingo th.completedY:hover  { background: linear-gradient(#15b300, #129b00); }
+.bingo th.completedDF       { background: linear-gradient(#149c02, #0f8300); }
+.bingo th.completedDF:hover { background: linear-gradient(#15b300, #129b00); }
+.bingo th.completedDR       { background: linear-gradient(#149c02, #0f8300); }
+.bingo th.completedDR:hover { background: linear-gradient(#15b300, #129b00); }
+
+.bingo th.free {
+    background: linear-gradient(#ebebeb, #b6b6b6);
+}
+.bingo th.free:hover {
+    background: linear-gradient(#ffffff, #cfcfcf);
+}
+
+.bingo span {
+    border-width: 0;
+    color: rgb(218, 218, 218);
+}
+
+.bingo .free span {
+    color: black;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NieR: Automata Bingo</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="textFit.min.js"></script>
+    <script src="bingo.js"></script>
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="bingo.css">
+    
+</head>
+<body>
+    <h1 style="margin: 0"><b>NieR: [A]utomata Bingo Generator</b></h3>
+    <br>
+    <div class="grid-container" style="grid-template-areas: 'bingo controls'; width: 80vmin; height: 80vmin; margin-left: 30px;">
+        <span style="grid-area: bingo">
+            <table id="bingo" class="bingo">
+                <tr><th></th><th></th><th></th><th></th><th></th></tr>
+                <tr><th></th><th></th><th></th><th></th><th></th></tr>
+                <tr><th></th><th></th><th></th><th></th><th></th></tr>
+                <tr><th></th><th></th><th></th><th></th><th></th></tr>
+                <tr><th></th><th></th><th></th><th></th><th></th></tr>
+            </table>
+        </span>
+        <span style="grid-area: controls; display: inline-block;">
+            <h3 style="margin: 0"><b>Settings:</b></h3>
+            <br>
+            <div style="line-height: 0; margin-left: 10px;">
+                <label><input type="checkbox" id="weapons" style="margin-bottom: 3px;">Use Weapon Challenges</label>
+                <label><input type="checkbox" id="transporter" style="margin-bottom: 3px;">Use Transporter Challenges</label>
+                <label><input type="checkbox" id="quests" style="margin-bottom: 3px;">Use Quest Challenges</label>
+                <label><input type="checkbox" id="items" style="margin-bottom: 3px;">Use Item Challenges</label>
+                <label><input type="checkbox" id="accessories" style="margin-bottom: 3px;">Use Accessory Challenges</label>
+                <label><input type="checkbox" id="accessories" style="margin-bottom: 3px;">Use Fishing Challenges</label>
+                <label><input type="checkbox" id="accessories" style="margin-bottom: 3px;">Use Ending Challenges</label>
+            </div>
+            <br>
+            <label for="free-input">Free Space:</label>
+            <input type="text" id="free-input" style="width: 40vmin;">
+
+            <label for="extras">Extra challenges (comma separated):</label>
+            <textarea type="text" id="extras" style="width: 40vmin; height: 20vmin;"></textarea>
+            <br>
+            <input type="button" onclick="generateBoard({free: document.getElementById('free-input').value})" value="Re-generate">
+        </span>
+    </div>
+    <br>
+    <input type="button" onclick="let tmp = document.getElementById('bingo'); $('body').children().remove(); body.appendChild(tmp);" value="Remove Everything Except Bingo">
+</body>
+</html>
