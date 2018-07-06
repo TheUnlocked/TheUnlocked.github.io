@@ -7,10 +7,10 @@ function connect(){
     if (ws.readyState)
         ws.close();
     if (window.location.protocol == "file:"){
-        ws = new WebSocket('ws://localhost:8000');
+        ws = new WebSocket('wss://localhost:443');
     }
     else{
-        ws = new WebSocket('ws://104.196.103.122:80');
+        ws = new WebSocket('wss://104.196.103.122:443');
     }
     ws.onopen = onConnect;
     ws.onmessage = messageDispatch;

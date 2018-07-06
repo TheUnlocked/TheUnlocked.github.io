@@ -1,4 +1,4 @@
-from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from SimpleWebSocketServer import SimpleSSLWebSocketServer, WebSocket
 import json
 
 games = {}
@@ -117,5 +117,5 @@ class BingoClient(WebSocket):
         except Exception as e:
             print(e)
 
-server = SimpleWebSocketServer('', 8000, BingoClient)
+server = SimpleSSLWebSocketServer('', 443, BingoClient, './cert.pem', './key.pem')
 server.serveforever()
