@@ -37,6 +37,7 @@ table.bingo {
     text-overflow: ellipsis;
     text-align: center;
     padding: 5px;
+    position: sticky;
 }
 
 .bingo th.unselected {
@@ -76,4 +77,21 @@ table.bingo {
 
 .bingo .free span {
     color: black;
+}
+
+.bingo .completedOthers {
+    position: absolute;
+    top: 0.6vmin;
+    left: 0.5vmin;
+    border-width: 0;
+    text-align: left;
+    line-height: 1;
+    color: rgba(255,255,255,0.35);
+    z-index: -1;
+    font-size: 2.1vmin;
+}
+
+label {
+    font-weight: initial;
+    margin-bottom: initial;
 }
