@@ -32,7 +32,20 @@ function getEigenVectors(){
     let eigenVectors = [];
 
     for (let value of eigenValues){
-        eigenVectors.push([-m_10 / (m_00 - value), 1]);
+        if (m_00 == value){
+            if (m_10 == 0 && m_01 == 0){
+                return [];
+            }
+            else if (m_10 == 0){
+                eigenVectors.push([0, 1]);
+            }
+            else{
+                eigenVectors.push([1, 0]);
+            }
+        }
+        else{
+            eigenVectors.push([-m_10 / (m_00 - value), 1]);
+        }
     }
 
     return eigenVectors;
