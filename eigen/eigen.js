@@ -2,20 +2,26 @@ let m_00, m_10,
     m_01, m_11;
 
 function quadratic(a, b, c){
-    let addend = Math.sqrt((b*b)-4*a*c);
-    if (isNaN(addend)){
-        return [];
-    }
-    else if (addend == 0){
+    let disc = b*b-4*a*c;
+    if (Math.abs(disc) < 1e-12){ // Float safety
         return [-b / (2 * a)];
     }
+    else if (disc < 0){
+        return [];
+    }
     else{
+        let addend = sqrt(disc);
         return [(-b + addend) / (2 * a), (-b - addend) / (2 * a)];
     }
 }
 
 function transformPoint(pt){
     return [pt[0] * m_00 + pt[1] * m_10, pt[0] * m_01 + pt[1] * m_11];
+}
+
+function inverseTransformPoint(pt){
+    let determinant = m_00 * m_11 - m_10 * m_01;
+    return [(pt[0]*m_11 - pt[1]*m_10) / determinant, (-pt[0]*m_01 + pt[1]*m_00) / determinant];
 }
 
 function getEigenValues(){
