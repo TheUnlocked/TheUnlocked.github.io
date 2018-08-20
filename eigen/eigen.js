@@ -1,6 +1,3 @@
-let m_00, m_10,
-    m_01, m_11;
-
 function quadratic(a, b, c){
     let disc = b*b-4*a*c;
     if (Math.abs(disc) < 1e-12){ // Float safety
@@ -10,7 +7,7 @@ function quadratic(a, b, c){
         return [];
     }
     else{
-        let addend = sqrt(disc);
+        let addend = Math.sqrt(disc);
         return [(-b + addend) / (2 * a), (-b - addend) / (2 * a)];
     }
 }

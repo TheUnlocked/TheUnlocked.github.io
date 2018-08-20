@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Eigenvector demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/skeleton.css" />
+    <script src="vars.js"></script>
     <script src="eigen.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.js"></script>
 </head>
@@ -16,10 +17,18 @@
     <br />
     <input type="number" style="width: 70px;" value="0" id="matrix_01"/><input type="number" style="width: 70px;" value="1" id="matrix_11"/>
     <br />
-    Transform amount:
-    <br />
-    <input type="range" min="0.00001" max="1" step="0.00001" value="1" id="transform_amount">
-    <br />
+
     <script src="render.js"></script>
+    <script src="renderoriginal.js"></script>
+    <span style="padding-right: 30px; float: left;">
+        Original:
+        <br />
+        <span id="original"></span>
+    </span>
+    <span style="float: left;"> 
+        Transformed:
+        <br />
+        <span id="transformed"></span>
+    </span>
 </body>
 </html>
