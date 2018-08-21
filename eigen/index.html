@@ -9,26 +9,39 @@
     <script src="vars.js"></script>
     <script src="eigen.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc/dist/katex.min.css" integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc/dist/katex.min.js" integrity="sha384-ttOZCNX+557qK00I95MHw9tttcgWn2PjR/bXecuEvENq6nevFtwSSQ6bYEN6AetB" crossorigin="anonymous"></script>
 </head>
 <body>
-    Transformation Matrix:
-    <br /> 
-    <input type="number" style="width: 70px; margin-bottom: 0" value="1" id="matrix_00" /><input type="number" style="width: 70px; margin-bottom: 0" value="0" id="matrix_10"/>
-    <br />
-    <input type="number" style="width: 70px;" value="0" id="matrix_01"/><input type="number" style="width: 70px;" value="1" id="matrix_11"/>
-    <br />
+    <table cellspacing="0" cellpadding="0" style="border: none;">
+        <tr><td>
+            <span style="padding-right: 30px; float: left">
+                Transformation Matrix:
+                <br /> 
+                <input type="number" style="width: 70px; margin-bottom: 0" value="1" id="matrix_00" /><input type="number" style="width: 70px; margin-bottom: 0" value="0" id="matrix_10"/>
+                <br />
+                <input type="number" style="width: 70px;" value="0" id="matrix_01"/><input type="number" style="width: 70px;" value="1" id="matrix_11"/>
+            </span>
+            <span style="padding-right: 30px; padding-top: 22px; float: left" id="katexRender"> </span>
+        </td></tr>
+
+        <tr><td>
+            <span style="padding-right: 30px; float: left;">
+                Original:
+                <br />
+                <span id="original"></span>
+            </span>
+            <span style="float: left;"> 
+                Transformed:
+                <br />
+                <span id="transformed"></span>
+            </span>
+        </td></tr>
+    </table>
 
     <script src="render.js"></script>
     <script src="renderoriginal.js"></script>
-    <span style="padding-right: 30px; float: left;">
-        Original:
-        <br />
-        <span id="original"></span>
-    </span>
-    <span style="float: left;"> 
-        Transformed:
-        <br />
-        <span id="transformed"></span>
-    </span>
+    <script src="rendermath.js"></script>
 </body>
 </html>

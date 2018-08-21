@@ -51,6 +51,10 @@ function getEigenVectors(){
         }
     }
 
+    if (eigenVectors.length == 2 && eigenVectors[0][0] == eigenVectors[1][0] && eigenVectors[0][1] == eigenVectors[1][1]){
+        eigenVectors = [eigenVectors[0]];
+    }
+
     return eigenVectors;
 }
 
@@ -63,4 +67,14 @@ function getNormalizedEigenVectors(){
     }
 
     return normalizedVectors;
+}
+
+function getVectorCoefficients(eigenVectors, targetedPoint){
+    let px = targetedPoint[0], py = targetedPoint[1],
+        v1x = eigenVectors[0][0], v1y = eigenVectors[0][1], 
+        v2x = eigenVectors[1][0], v2y = eigenVectors[1][1];
+    let a = (py - (v2y * px / v2x)) / (v1y - (v2y * v1x / v2x));
+    let b = (px - (a * v1x)) / v2x;
+
+    return [a, b];
 }

@@ -43,11 +43,11 @@ let transformed = sketch => {
         let eigenVectors = getNormalizedEigenVectors();
 
         if (targetedPoint && eigenVectors.length == 2){
-            let px = targetedPoint[0], py = targetedPoint[1],
-                v1x = eigenVectors[0][0], v1y = eigenVectors[0][1], 
+            let coefficients = getVectorCoefficients(eigenVectors, targetedPoint);
+            let a = coefficients[0], b = coefficients[1];
+
+            let v1x = eigenVectors[0][0], v1y = eigenVectors[0][1], 
                 v2x = eigenVectors[1][0], v2y = eigenVectors[1][1];
-                let a = (py - (v2y * px / v2x)) / (v1y - (v2y * v1x / v2x));
-                let b = (px - (a * v1x)) / v2x;
             
             sketch.strokeWeight(4);
 
