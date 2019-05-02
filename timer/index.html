@@ -11,19 +11,29 @@
 
         let timeLeft;
         let decreasing = false;
+        let stopUpdating = false;
 
         document.body.addEventListener('keyup', function(e){
-            if(!decreasing && e.keyCode == 32){
+            if(!decreasing && e.keyCode == 32){ // Start with space
                 timeLeft = 600;
                 decreasing = true;
                 let updater = () => {
-                    timeLeft--;
-                    updateText();
-                    if (timeLeft > 0){
+                    if (stopUpdating){
+                        stopUpdating = false;
+                    }
+                    else if (timeLeft > 0){
+                        timeLeft--;
+                        updateText();
                         setTimeout(updater, 999);
                     }
                 };
                 setTimeout(updater, 999);
+            }
+            if (decreasing && e.keyCode == 82){ // Reset with R
+                timeLeft = 600;
+                updateText();
+                stopUpdating = true;
+                decreasing = false;
             }
         });
 
