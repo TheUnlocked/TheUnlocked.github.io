@@ -9,13 +9,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function(){
 
+        const totalTime = 5;
+
         let timeLeft;
         let decreasing = false;
         let stopUpdating = false;
 
-        document.body.addEventListener('keyup', function(e){
-            if(!decreasing && e.keyCode == 32){ // Start with space
-                timeLeft = 600;
+        document.getElementById('start-stop').addEventListener('click', function(e){
+            if(!decreasing){
+                document.getElementById("start-stop").innerHTML = "Reset";
+                timeLeft = totalTime;
                 decreasing = true;
                 let updater = () => {
                     if (stopUpdating){
@@ -26,14 +29,21 @@
                         updateText();
                         setTimeout(updater, 999);
                     }
+                    else{
+                        decreasing = false;
+                        document.getElementById("start-stop").innerHTML = "Reset & Start";
+                    }
                 };
-                setTimeout(updater, 999);
+                updater();
             }
-            if (decreasing && e.keyCode == 82){ // Reset with R
-                timeLeft = 600;
+            else {
+                timeLeft = totalTime;
                 updateText();
-                stopUpdating = true;
+                if (decreasing){
+                    stopUpdating = true;
+                }
                 decreasing = false;
+                document.getElementById("start-stop").innerHTML = "Start";
             }
         });
 
@@ -70,11 +80,24 @@
             font-size: 35vw;
             font-family:Helvetica, sans-serif;
         }
+
+        #start-stop {
+            background: black;
+            color: #aaaaaa;
+            position: absolute;
+            top: 87vh;
+            border: 2px solid #555555;
+            border-radius: 5px;
+            font-size: 8vh;
+            left: 5vw;
+            width: 90vw;
+        }
     </style>
 </head>
 <body style="background: black; color: white">
     <div class="center">
         <div id="timer-text" class="child">10:00</div>
     </div>
+    <button id="start-stop">Start</button>
 </body>
 </html>
