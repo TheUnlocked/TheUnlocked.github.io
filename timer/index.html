@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+
+        let timeLeft;
+        let decreasing = false;
+
+        document.body.addEventListener('keyup', function(e){
+            if(!decreasing && e.keyCode == 32){
+                timeLeft = 600;
+                decreasing = true;
+                let updater = () => {
+                    timeLeft--;
+                    updateText();
+                    if (timeLeft > 0){
+                        setTimeout(updater, 999);
+                    }
+                };
+                setTimeout(updater, 999);
+            }
+        });
+
+        function updateText(){
+            let firstTerm = Math.floor(timeLeft / 60);
+            let secondTerm = timeLeft % 60;
+            if (secondTerm < 10){
+                secondTerm = "0" + secondTerm;
+            }
+            document.getElementById("timer-text").innerHTML = `${firstTerm}:${secondTerm}`;
+        }
+
+        }, false);
+    </script>
+    <style>
+        .center { 
+            height: 100vh;
+            position: relative;
+        }
+
+        .center .child {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #timer-text {
+            font-size: 35vw;
+            font-family:Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body style="background: black; color: white">
+    <div class="center">
+        <div id="timer-text" class="child">10:00</div>
+    </div>
+</body>
+</html>
