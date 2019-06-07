@@ -15,12 +15,21 @@
                         return response.json();
                     }
                 })
-                .then(result =>
-                        document.getElementById("printout").innerHTML = `  {
-    "uuid": "${result.id}",
+                .then(result => {
+                    let plainUUID = result.id;
+                    let uuid = [
+                        plainUUID.slice(0,8),
+                        plainUUID.slice(8,12),
+                        plainUUID.slice(12,16),
+                        plainUUID.slice(16,20),
+                        plainUUID.slice(20,32)
+                    ].join('-');
+
+                    document.getElementById("printout").innerHTML = `  {
+    "uuid": "${uuid}",
     "name": "${result.name}"
   }`
-                )
+                })
                 .catch(reject);
             }
 
