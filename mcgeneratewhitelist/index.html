@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+        
+            function showWhitelist(){
+                let username = document.getElementById("username").value;
+
+                fetch(`https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${username.toLowerCase()}`, {mode: 'cors'})
+                .then(response => {
+                    if (response.status >= 300){
+                        reject();
+                    }
+                    else{
+                        return response.json();
+                    }
+                })
+                .then(result =>
+                        document.getElementById("printout").innerHTML = `  {
+    "uuid": "${result.id}",
+    "name": "${result.name}"
+  }`
+                )
+                .catch(reject);
+            }
+
+            function reject(){
+                document.getElementById("printout").innerHTML = "That username is not associated with a real Minecraft username.";
+            }
+
+            function load(){
+                document.getElementById("username").addEventListener('keydown', e => {
+                    if (e.key === "Enter"){
+                        showWhitelist();
+                    }
+                });
+            };
+
+        </script>
+
+        <style>
+        
+            #printout {
+                background: #EEEEEE;
+            }
+
+        </style>
+    </head>
+    <body onload="load()">
+        <input id="username" type="text" placeholder="Minecraft Username">
+        <button onclick="showWhitelist()">Generate Whitelist Text</button>
+        <pre id="printout"></pre>
+    </body>
+</html>
