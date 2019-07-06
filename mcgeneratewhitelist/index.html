@@ -3,44 +3,66 @@
     <head>
         <script>
         
-            function showWhitelist(){
+            function showWhitelistSingle(){
                 let username = document.getElementById("username").value;
 
-                fetch(`https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${username.toLowerCase()}`, {mode: 'cors'})
-                .then(response => {
-                    if (response.status >= 300){
-                        reject();
-                    }
-                    else{
-                        return response.json();
-                    }
-                })
+                getDataFromUsername(username)
                 .then(result => {
-                    let plainUUID = result.id;
-                    let uuid = [
-                        plainUUID.slice(0,8),
-                        plainUUID.slice(8,12),
-                        plainUUID.slice(12,16),
-                        plainUUID.slice(16,20),
-                        plainUUID.slice(20,32)
-                    ].join('-');
-
                     document.getElementById("printout").innerHTML = `{
-    "uuid": "${uuid}",
-    "name": "${result.name}"
+    "uuid": "${result.uuid}",
+    "name": "${result.username}"
   }`
-                })
-                .catch(reject);
+                });
             }
 
-            function reject(){
-                document.getElementById("printout").innerHTML = "That username is not associated with a real Minecraft username.";
+            function showWhitelistMany(){
+                let usernames = document.getElementById("usernames").value.split("\n").filter(x => x !== "");
+
+                Promise.resolve().then(async () => {
+                    let playerData = await Promise.all(usernames.map(getDataFromUsername));
+                    document.getElementById("printout").innerHTML = playerData.map(data => `{
+    "uuid": "${data.uuid}",
+    "name": "${data.username}"
+  }`).join(",\n  ");
+                });
+            }
+
+            async function getDataFromUsername(username){
+                let data = await fetch(`https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${username.toLowerCase()}`);
+                if (!data.ok){
+                    return {name: username.toLowerCase(), uuid: "BAD USERNAME"};
+                }
+                let json = await data.json();
+                let uuid = [
+                    json.id.slice(0,8),
+                    json.id.slice(8,12),
+                    json.id.slice(12,16),
+                    json.id.slice(16,20),
+                    json.id.slice(20,32)
+                ].join('-');
+                return {
+                    username: json.name,
+                    uuid: uuid
+                }
+            }
+
+            function changeMulti(){
+                if (document.getElementById("multitoggle").checked){
+                    document.getElementById("username").style.display = "none";
+                    document.getElementById("usernames").style.display = "";
+                    document.getElementById("submitbutton").onclick = showWhitelistMany;
+                }
+                else{
+                    document.getElementById("username").style.display = "";
+                    document.getElementById("usernames").style.display = "none";
+                    document.getElementById("submitbutton").onclick = showWhitelistSingle;
+                }
             }
 
             function load(){
                 document.getElementById("username").addEventListener('keydown', e => {
                     if (e.key === "Enter"){
-                        showWhitelist();
+                        showWhitelistSingle();
                     }
                 });
             };
@@ -56,8 +78,15 @@
         </style>
     </head>
     <body onload="load()">
+        <input id="multitoggle" type="checkbox" onchange="changeMulti()"> <label for="multitoggle">Allow Multiple Inputs</label> <br />
         <input id="username" type="text" placeholder="Minecraft Username">
-        <button onclick="showWhitelist()">Generate Whitelist Text</button>
+        <textarea id="usernames" style="display: none; height: 70pt" placeholder="Username1
+Username2
+Username3"></textarea>
+
+        <br />
+
+        <button id="submitbutton" onclick="showWhitelistSingle()">Generate Whitelist Text</button>
         <pre id="printout"></pre>
     </body>
 </html>
