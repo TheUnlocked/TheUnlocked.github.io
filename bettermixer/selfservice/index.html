@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Better Mixer Self-Service</title>
+  <meta name="description" content="">
+  <meta name="author" content="Unlocked">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="main.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body onload="updateChannelCustomizationOutput()">
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
+    <div class="row">
+        <div class="column">
+            <h2 style="font-weight: 600">Better Mixer Self-Service</h2>
+        </div>
+        <div class="column">
+            <h4>Channel Customization</h4>
+
+            <label>
+                <div>Twitch Username<a href="#q-twitch-username"><sup>?</sup></a></div>
+                <input oninput="updateChannelCustomizationOutput()" type="text" id="ch-twitch-username">
+            </label>
+            
+            
+            <label>
+                <input oninput="updateChannelCustomizationOutput()" checked type="checkbox" id="ch-ffz-sync">
+                <span class="label-body">Sync FFZ Emotes</span>
+            </label>
+
+            <label>
+                <input oninput="updateChannelCustomizationOutput()" checked type="checkbox" id="ch-bttv-sync">
+                <span class="label-body">Sync BTTV Emotes</span>
+            </label>
+
+            <label>
+                <input oninput="updateChannelCustomizationOutput()" disabled type="checkbox" id="ch-ffz-globals">
+                <sup>Coming Soon...</sup>
+                <span class="label-body">Show FFZ Global Emotes</span>
+            </label>
+
+            <label>
+                <input oninput="updateChannelCustomizationOutput()" disabled type="checkbox" id="ch-bttv-globals">
+                <sup>Coming Soon...</sup>
+                <span class="label-body">Show BTTV Global Emotes</span>
+            </label>
+        </div>
+
+        <div class="column">
+            <h5>Output<a href="#q-install-flags"><sup>?</sup></a></h5>
+            <pre style="word-break: break-all; white-space: unset;"><code id="ch-desc-printout" style="word-break: break-all; white-space: unset;" class="selectall">&lt;img alt="!!better-mixer-desc-flags!!{}" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" /&gt;</code></pre>
+            (Make sure to read the FAQ if you don't know how to use this!)
+        </div>
+
+        <div class="column" style="height: 30px"></div>
+
+        <div class="column">
+            <h4>FAQ</h4>
+
+            <div style="font-weight: 600" id="q-install-flags">How do I use the output to configure Better Mixer for my channel?</div>
+            First open the edit description text editor, either on your channel page or in your dashboard. Then, click the <img style="vertical-align: middle; padding: 0 0 10px;" height="25em" width="auto" src="images/desc-edit-source.png" alt="source"> icon to edit your description in HTML mode.
+            Scroll down to the end of your description, and paste the output onto its own line (you may need to use shift+enter to create a new line). Then click <img style="vertical-align: middle; padding: 0 0 10px;" height="25em" width="auto" src="images/desc-edit-save.png" alt="save"> to apply the changes and refresh the page to see them.
+            If you ever want to change your settings, repeat this process but replace the output that was previously in your description with the new one.
+            <br /><br />Note: It may take a few seconds after editing your description for the changes to take effect. If your settings changes don't take effect, try waiting thirty seconds and then refreshing.
+            <p></p>
+
+            <div style="font-weight: 600">How does this work?</div>
+            Though Mixer appears to let you edit the HTML source of your description, it does not actually allow you to put any HTML that you want.
+            In fact, the selection of permitted tags and attributes is actually quite limited. Fortunately, <code>img</code> tags are allowed, as is the <code>alt</code> attribute on those <code>img</code> tags.
+            This allows me to use a 1x1 transparent pixel image with an <code>alt</code> attribute containing relevant channel setting data.
+            The 1x1 transparent pixel image is invisible to users, but can be viewed in the DOM by Better Mixer, which reads the <code>alt</code> attribute for relevant data.
+            Because a channel's description is accessible through Mixer's REST API, Better Mixer can even read channel settings for channels that the user is not currently on without needing to load that other user's entire channel in the background.
+            <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser">DOMParser</a></code> is used for parsing a user's description when it's obtained from a GET reqest.
+            <p></p>
+
+            <div style="font-weight: 600">I keep seeing a message that says "An unknown error occurred." when I try to edit my description. How do I fix this?</div>
+            For some reason, you may need to log out of Mixer and then log back in through your Microsoft account to edit your description if you see this message.<sup><a href="https://watchbeam.zendesk.com/hc/en-us/articles/360030918092-Error-Codes-and-Their-Solutions#channel">Source</a></sup>
+            <p></p>
+
+            <div style="font-weight: 600" id="q-twitch-username">Can I use someone else's Twitch username for syncing?</div>
+            No. While there are currently no ways to enforce this policy, understand that it is against the terms of using Better Mixer, 
+            and using someone else's Twitch accout for your own Mixer channel may result in some kind of punishment in the future.
+            This is still not allowed if you have permission from the owner of the Twitch account, but I am less likely to intervene in such a case.
+            <p></p>
+
+            <div style="font-weight: 600">I synced my Mixer and Twitch using the channel sync form. Do I need to use this new method?</div>
+            All accounts that were synced before the introduction of the description-based self-service system have been grandfathered in and do not need to use this system in order to be synced.
+            However, the self-service system may still be used to edit settings or change the linked Twitch account.
+            If used, it will override your old sync, though you can still remove the self-service string from your channel description to fall back to the old system.
+            All channel settings added after the introduction of the self-service system will not apply if you stay on the old system.
+            <p></p>
+
+        </div>
+    </div>
+    <div class="row">
+        
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
