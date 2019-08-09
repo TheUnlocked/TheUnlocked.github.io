@@ -6,19 +6,23 @@ const updateChannelCustomizationOutput = () => {
     const twitchUsername = document.getElementById('ch-twitch-username').value;
     const ffzSync = document.getElementById('ch-ffz-sync').checked;
     const bttvSync = document.getElementById('ch-bttv-sync').checked;
+    // const twitchGlobals = document.getElementById('ch-twitch-globals').checked;
+    const ffzGlobals = document.getElementById('ch-ffz-globals').checked;
+    const bttvGlobals = document.getElementById('ch-bttv-globals').checked;
 
     const data = {};
+    data.twitch = {};
+    data.ffz = {};
+    data.bttv = {};
 
     if (twitchUsername !== ""){
-        data.twitch = {};
         data.twitch.name = twitchUsername.toLowerCase();
-
-        data.ffz = {};
         data.ffz.sync = ffzSync;
-
-        data.bttv = {};
         data.bttv.sync = bttvSync;
     }
+    // data.twitch.globals = twitchGlobals;
+    data.bttv.globals = bttvGlobals;
+    data.ffz.globals = ffzGlobals;
 
     document.getElementById('ch-desc-printout').innerHTML = encodeHTMLEntities(getFlagStringFromData(data));
 }
