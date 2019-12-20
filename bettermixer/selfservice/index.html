@@ -36,7 +36,8 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
+  <div style="margin-top: 100px"></div>
+  <div class="container">
     <div class="row">
         <div class="column">
             <h2 style="font-weight: 600">Better Mixer Self-Service</h2>
@@ -74,8 +75,18 @@
                 <input oninput="updateChannelCustomizationOutput()" type="checkbox" id="ch-bttv-globals">
                 <span class="label-body">Show BTTV Global Emotes</span>
             </label>
-        </div>
 
+            <input onclick="updateMixerDescription()" type="button" value="Automatically add to my Mixer description" />
+            <p id="updated-at"></p>
+            <br />
+            Or alternatively, do it yourself:
+        </div>
+    </div>
+  </div>
+  <hr />
+  <div class="container">
+    <div class="row">
+        <div class="column"></div>
         <div class="column">
             <h5>Output<a href="#q-install-flags"><sup>?</sup></a></h5>
             <pre style="word-break: break-all; white-space: unset;"><code id="ch-desc-printout" style="word-break: break-all; white-space: unset;" class="selectall">&lt;img alt="!!better-mixer-desc-flags!!{}" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" /&gt;</code></pre>
@@ -138,6 +149,7 @@
         
     </div>
   </div>
+  <div style="margin-bottom: 100px"></div>
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
