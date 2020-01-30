@@ -74,15 +74,30 @@
                 <input oninput="updateChannelCustomizationOutput()" type="checkbox" id="ch-bttv-globals">
                 <span class="label-body">Show BTTV Global Emotes</span>
             </label>
-        </div>
 
-        <div class="column">
             <h5>Output<a href="#q-install-flags"><sup>?</sup></a></h5>
             <pre style="word-break: break-all; white-space: unset;"><code id="ch-desc-printout" style="word-break: break-all; white-space: unset;" class="selectall">&lt;img alt="!!better-mixer-desc-flags!!{}" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" /&gt;</code></pre>
             (Make sure to read the FAQ if you don't know how to use this!)
         </div>
 
-        <div class="column" style="height: 30px"></div>
+        <div class="column">
+            <h4>Two-Phase Banner Creator<a href="#q-banner-usage"><sup>?</sup></a></h4>
+            <p>
+                A bunch of pre-made banner images are provided <a href="https://github.com/TheUnlocked/Better-Mixer/tree/master/Promo/Banners">here</a>. <br />
+                You will still need to use this tool to get a two-phase banner.
+            </p>
+            <label>
+                <div>Image to display if Better Mixer is not installed</div>
+                <input oninput="updateBannerCustomizationOutput()" type="text" id="ba-not-installed" style="width: 500px;">
+            </label>
+            <label>
+                <div>Image to display if Better Mixer is installed</div>
+                <input oninput="updateBannerCustomizationOutput()" type="text" id="ba-installed" style="width: 500px;">
+            </label>
+
+            <h5>Output<a href="#q-banner-usage"><sup>?</sup></a></h5>
+            <pre style="word-break: break-all; white-space: unset;"><code id="ba-printout" style="word-break: break-all; white-space: unset;" class="selectall"></code></pre>
+        </div>
 
         <div class="column">
             <h4>FAQ</h4>
@@ -121,6 +136,12 @@
             However, the self-service system may still be used to edit settings or change the linked Twitch account.
             If used, it will override your old sync, though you can still remove the self-service string from your channel description to fall back to the old system.
             All channel settings added after the introduction of the self-service system will not apply if you stay on the old system.
+            <p></p>
+
+            <div style="font-weight: 600" id="q-banner-usage">How does this banner thing work?</div>
+            Two-phase banners allow you to show one image to people who don't have Better Mixer installed and show another image to people who do have Better Mixer installed.
+            To use the banner, just use the output as the image URL when putting an image in your description.
+            Note that two-phase banners will only work on Mixer, and won't be able to detect if Better Mixer is installed on other sites.
             <p></p>
 
             <div style="font-weight: 600">How can I contact you if I have any questions?</div>

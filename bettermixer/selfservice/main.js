@@ -26,3 +26,7 @@ const updateChannelCustomizationOutput = () => {
 
     document.getElementById('ch-desc-printout').innerHTML = encodeHTMLEntities(getFlagStringFromData(data));
 }
+
+const updateBannerCustomizationOutput = () => {
+    document.getElementById('ba-printout').innerHTML = `${document.getElementById('ba-not-installed').value}?bettermixerenabled=${btoa(document.getElementById('ba-installed').value)}`
+}
