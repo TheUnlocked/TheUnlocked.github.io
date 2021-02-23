@@ -28,6 +28,22 @@ let transformed = sketch => {
             p2 = transformPoint([i - tiles_r, tiles_r]);
             sketch.line((p1[0] + tiles_r) * tile_size, (p1[1] + tiles_r) * tile_size, (p2[0] + tiles_r) * tile_size, (p2[1] + tiles_r) * tile_size);
         }
+
+        {
+            // Standard grid lines
+            sketch.stroke(0, 200, 0, 70);
+            for (let i = 0; i <= tiles_r * 2; i++){
+                p1 = [-tiles_r, i - tiles_r];
+                p2 = [tiles_r, i - tiles_r];
+                sketch.line((p1[0] + tiles_r) * tile_size, (p1[1] + tiles_r) * tile_size, (p2[0] + tiles_r) * tile_size, (p2[1] + tiles_r) * tile_size);
+            }
+            for (let i = 0; i <= tiles_r * 2; i++){
+                p1 = [i - tiles_r, -tiles_r];
+                p2 = [i - tiles_r, tiles_r];
+                sketch.line((p1[0] + tiles_r) * tile_size, (p1[1] + tiles_r) * tile_size, (p2[0] + tiles_r) * tile_size, (p2[1] + tiles_r) * tile_size);
+            }
+        }
+
         sketch.stroke(0);
 
         p1 = transformPoint([-tiles_r, 0]);
