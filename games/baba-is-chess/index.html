@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Baba is Chess</title>
+      <script type="module" crossorigin src="/assets/index-9d3220e0.js"></script>
+      <link rel="stylesheet" href="/assets/index-14ca4cdd.css">
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <label>
+                    Show evaluation?
+                    <input id="show-eval" type="checkbox" />
+                </label>
+                Evaluation: <span id="evaluation"></span>
+            </div>
+            <div id="controls">
+                <label>
+                    Mode:
+                    <select id="mode-select">
+                        <option value="manual">2-player</option>
+                        <option value="bot-b" selected>Play as white</option>
+                        <option value="bot-w">Play as black</option>
+                        <option value="bot-all">Bot fight!</option>
+                    </select>
+                </label>
+                <label>
+                    Difficulty:
+                    <select id="difficulty-select">
+                        <option value="1" selected>Medium</option>
+                        <option value="2">Hard</option>
+                        <option value="3">Very Hard</option>
+                    </select>
+                </label>
+                <button id="start-button">Start</button>
+            </div>
+            <chess-board
+                id="board"
+                position="start"
+                draggable-pieces>
+            </chess-board>
+        </div>
+        
+    </body>
+</html>

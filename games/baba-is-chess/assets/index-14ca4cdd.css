@@ -1,0 +1,1 @@
+@import"https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:wght@400;900&display=swap";body{font-family:Roboto,sans-serif;margin:0;overflow:hidden}#controls{padding:1em}#app{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh}#board{width:600px;height:600px;overflow:visible}
